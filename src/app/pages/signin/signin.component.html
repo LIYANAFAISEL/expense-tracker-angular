@@ -1,0 +1,55 @@
+
+<div class="container" >
+
+    <div class="left">
+        <div class="image-container">
+            <img src="expense-tracker.png" alt="Logo Image">
+        </div>
+    </div>
+
+    <div class="right">
+        <main>
+            <form [formGroup]="form">
+                <h2>Welcome to Expense Tracker!</h2>
+
+                <mat-form-field>
+                    <mat-label>Email</mat-label>
+                    <input type="email" matInput placeholder="Ex: pat@example.com" formControlName="email">
+                    <mat-error *ngIf="form.get('email')!.hasError('required')">
+                        Email is required
+                    </mat-error>
+                    <mat-error *ngIf="form.get('email')!.hasError('email')">
+                        Email is invalid
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>Password</mat-label>
+                    <input type="password" matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'">                
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="form.get('password')!.hasError('required')">
+                        Password is required
+                    </mat-error>
+                </mat-form-field>
+
+                <div class='forget-password-button'>
+                    <button mat-button [disabled]="!form.get('email')!.valid"
+                        test-id="recover-password-button">
+                        Forget password
+                    </button>
+                </div>
+
+                <button mat-flat-button color="primary" [disabled]="!form.valid"
+                    test-id="login-button">
+                    LOGIN
+                </button>
+
+                <button mat-stroked-button color="primary">REGISTER</button>
+
+            </form>
+        </main>
+    </div>
+
+</div>

@@ -1,0 +1,57 @@
+
+.container {
+    display: flex;         /* Use Flexbox for layout */
+    height: 100vh;         /* Full screen height */
+}
+  
+.left, .right {
+    flex: 1;               /* Divide space equally between the two sections */
+    display: flex;         /* Optional: center content in each section */
+    justify-content: center; /* Center content horizontally */
+    align-items: center;    /* Center content vertically */
+}
+
+main{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 100px;
+    align-items:flex-end;
+    height: 55vh;
+}
+
+image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+
+form {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    align-items:flex-end;
+    flex-direction: column;
+
+    button,
+    mat-form-field {
+        width: -webkit-fill-available;
+    }
+
+    mat-form-field{
+        margin-bottom: 10px;
+    }
+    button {
+        margin: 5px 0;
+
+        &[mat-button] {
+            width: auto;
+        }
+    }
+
+    forget-password-button {
+        text-align: right;
+        width: 100%;
+    }
+
+}
