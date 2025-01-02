@@ -1,38 +1,46 @@
 
 .container {
-    display: flex;         /* Use Flexbox for layout */
-    height: 100vh;         /* Full screen height */
+    display: flex;         
+    height: 100vh;         
 }
   
-.left, .right {
-    flex: 1;               /* Divide space equally between the two sections */
-    display: flex;         /* Optional: center content in each section */
-    justify-content: center; /* Center content horizontally */
-    align-items: center;    /* Center content vertically */
+.left{
+    flex: 1;              
+    display: flex;         
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.right{
+    flex: 1;               
+    display: flex;         
+    justify-content: center; 
+    align-items: center;    
+}
+
+.left img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 main{
     display: flex;
-    justify-content: flex-end;
-    padding-right: 100px;
-    align-items:flex-end;
-    height: 55vh;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 0 30px;
+    height: auto;
 }
 
-image {
+form{
     display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 10vh;
-}
-
-form {
-    display: flex;
-    justify-content: flex-end;
-    padding: 20px;
-    align-items:flex-end;
     flex-direction: column;
-
+    align-items:center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    
     button,
     mat-form-field {
         width: -webkit-fill-available;
@@ -41,6 +49,7 @@ form {
     mat-form-field{
         margin-bottom: 10px;
     }
+
     button {
         margin: 5px 0;
 
@@ -49,9 +58,16 @@ form {
         }
     }
 
-    forget-password-button {
-        text-align: right;
+    .forget-password-button {
+        display: flex;
+        justify-content: flex-end;
         width: 100%;
     }
 
 }
+
+h2{
+    color: #005cbb;
+}
+
+  

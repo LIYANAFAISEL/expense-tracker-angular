@@ -3,53 +3,216 @@
 
     <div class="left">
         <div class="image-container">
-            <img src="expense-tracker.png" alt="Logo Image">
+            <img 
+                src="expense-tracker.png" 
+                alt="Logo Image">
         </div>
     </div>
 
     <div class="right">
-        <main>
-            <form [formGroup]="form">
-                <h2>Welcome to Expense Tracker!</h2>
-
+<!-- SignIn form -->
+        <div [ngClass]="{'hidden': isFormHidden}">
+            <form 
+                [formGroup]="signInForm" 
+                *ngIf="!isSignUpClicked"
+            >
+                <h2>
+                    Welcome to Expense Tracker!
+                </h2>
+    
                 <mat-form-field>
-                    <mat-label>Email</mat-label>
-                    <input type="email" matInput placeholder="Ex: pat@example.com" formControlName="email">
-                    <mat-error *ngIf="form.get('email')!.hasError('required')">
+                    <mat-label>
+                        Email
+                    </mat-label>
+
+                    <input 
+                        matInput 
+                        type="email" 
+                        placeholder="Ex: pat@example.com" 
+                        formControlName="email"
+                    >
+
+                    <mat-error *ngIf="signInForm.get('email')!.hasError('required')">
                         Email is required
                     </mat-error>
-                    <mat-error *ngIf="form.get('email')!.hasError('email')">
+
+                    <mat-error *ngIf="signInForm.get('email')!.hasError('email')">
                         Email is invalid
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
-                    <mat-label>Password</mat-label>
-                    <input type="password" matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'">                
-                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-label>
+                        Password
+                    </mat-label>
+
+                    <input 
+                        matInput
+                        type="password"  
+                        placeholder="Password" 
+                        formControlName="password" 
+                        [type]="hide ? 'password' : 'text'"
+                    >                
+
+                    <button 
+                        mat-icon-button 
+                        matSuffix 
+                        (click)="hide = !hide" 
+                        [attr.aria-label]="'Hide password'" 
+                        [attr.aria-pressed]="hide"
+                    >
+                        <mat-icon>
+                            {{hide ? 'visibility_off' : 'visibility'}}
+                        </mat-icon>
                     </button>
-                    <mat-error *ngIf="form.get('password')!.hasError('required')">
+
+                    <mat-error *ngIf="signInForm.get('password')!.hasError('required')">
                         Password is required
                     </mat-error>
                 </mat-form-field>
 
-                <div class='forget-password-button'>
-                    <button mat-button [disabled]="!form.get('email')!.valid"
-                        test-id="recover-password-button">
-                        Forget password
-                    </button>
-                </div>
-
-                <button mat-flat-button color="primary" [disabled]="!form.valid"
-                    test-id="login-button">
+                <button 
+                    mat-flat-button 
+                    color="primary" 
+                    [disabled]="!signInForm.valid"
+                >
                     LOGIN
                 </button>
 
-                <button mat-stroked-button color="primary">REGISTER</button>
+                <button 
+                    mat-stroked-button 
+                    color="primary" 
+                    (click)="onToRegister()"
+                >
+                    Don't have an account? REGISTER
+                </button>
+                
+            </form>
+        </div>
+
+<!-- SignUp Form -->
+        <div [ngClass]="{'hidden': isFormHidden}">
+
+            <form 
+                [formGroup]="signUpForm" 
+                *ngIf="isSignUpClicked"
+            >
+                <h2>
+                    Create your new account
+                </h2>
+                
+                <mat-form-field>
+                    <mat-label>
+                        Email
+                    </mat-label>
+
+                    <input 
+                        matInput
+                        type="email"  
+                        placeholder="Ex: pat@example.com" 
+                        formControlName="email"
+                    >
+
+                    <mat-error *ngIf="signUpForm.get('email')!.hasError('required')">
+                        Email is required
+                    </mat-error>
+
+                    <mat-error *ngIf="signUpForm.get('email')!.hasError('email')">
+                        Email is invalid
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>
+                        Password
+                    </mat-label>
+
+                    <input 
+                        matInput 
+                        type="password" 
+                        placeholder="Password" 
+                        formControlName="password" 
+                        [value]="signUpForm.get('password')?.value" 
+                        #password 
+                        [type]="hide ? 'password' : 'text'"
+                    >
+
+                    <button 
+                        mat-icon-button 
+                        matSuffix 
+                        (click)="hide = !hide" 
+                        [attr.aria-label]="'Hide password'" 
+                        [attr.aria-pressed]="hide"
+                    >
+                        <mat-icon>
+                            {{hide ? 'visibility_off' : 'visibility'}}
+                        </mat-icon>
+                    </button>
+
+                    <mat-error *ngIf="signUpForm.get('password')?.hasError('required')">
+                        Password is required
+                    </mat-error>
+
+                </mat-form-field>
+                    
+                <mat-form-field appearance="fill">
+                    <mat-label>
+                        Repeat Password
+                    </mat-label>
+
+                    <input 
+                        matInput 
+                        type="password" 
+                        placeholder="Repeat Password" 
+                        formControlName="repeatPassword" 
+                        (input)="checkPasswords()"
+                        [value]="signUpForm.get('repeatPassword')?.value" 
+                        #repeatPassword 
+                        [type]="hideRepeatPassword ? 'password' : 'text'"
+                    >
+
+                    <button 
+                        mat-icon-button 
+                        matSuffix 
+                        (click)="hideRepeatPassword = !hideRepeatPassword" 
+                        [attr.aria-label]="'Hide password'" 
+                        [attr.aria-pressed]="hideRepeatPassword"
+                    >
+                        <mat-icon>
+                            {{hideRepeatPassword ? 'visibility_off' : 'visibility'}}
+                        </mat-icon>
+
+                    </button>
+
+                    <mat-error *ngIf="signUpForm.get('repeatPassword')?.hasError('required')">
+                        Repeat password is required
+                    </mat-error>
+
+                    <mat-error *ngIf="signUpForm.get('repeatPassword')?.hasError('passwordMismatch')">
+                        Password do not match
+                    </mat-error>
+
+                </mat-form-field>
+                
+                <button 
+                    mat-flat-button 
+                    color="primary" 
+                    (click)="onRegisterConfirm(password.value, repeatPassword.value)"
+                    [disabled]="!signUpForm.valid"
+                >
+                    REGISTER
+                </button>
+
+                <button 
+                    mat-stroked-button 
+                    color="primary" 
+                    (click)="onToLogin()"
+                >
+                    Already have an account? LOGIN
+                </button>
 
             </form>
-        </main>
+        </div>
     </div>
 
 </div>
