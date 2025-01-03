@@ -3,7 +3,11 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import { 
-  AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators
+ FormBuilder, 
+ FormGroup, 
+ FormsModule, 
+ ReactiveFormsModule, 
+ Validators
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
@@ -49,8 +53,8 @@ export class SigninComponent implements OnInit {
 
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      repeatPassword: ['', Validators.required],
+      password: ['', [Validators.required]],
+      repeatPassword: ['', [Validators.required]],
     });
   }
 
@@ -68,28 +72,34 @@ export class SigninComponent implements OnInit {
     }
   }
   
-  onToRegister() {
+  
+  onDontHaveAccount() {
     this.isFormHidden = true;
     this.isSignUpClicked = true;
     this.signInForm.reset();
   }
 
-  onToLogin() {
+  onAlreadyHaveAccount() {
     this.isFormHidden = true;
     this.isSignUpClicked = false;
     this.signUpForm.reset();
   }
 
-  onRegisterConfirm(password: string, repeatPassword: string, config?: MatSnackBarConfig) {
-    if(password === repeatPassword){
+  onRegisterSubmit(email: string, password: string, repeatPassword: string, config?: MatSnackBarConfig) {
+    console.log(email, password, repeatPassword);
+    if(this.signUpForm.valid){
       const snackBarRef = this._snackBar.open("Successfully registered", "Okay");
-    
-      // After the snackbar message is clicked Okay, set isSignUpClicked to false to show the Signin Page, after succesfull Registeration
+
+      // After the snackbar message is clicked Okay, set isSignUpClicked to false to show the Signin Page, 
+      // after succesfull Registeration
       snackBarRef.onAction().subscribe(() => {
         this.isSignUpClicked = false;
       });
     }
   }
-  
+
+  onLoginSubmit(email: string, password: string) {
+    //code for routing to home page when login succesfully
+  }
 
 }

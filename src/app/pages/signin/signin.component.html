@@ -15,6 +15,7 @@
             <form 
                 [formGroup]="signInForm" 
                 *ngIf="!isSignUpClicked"
+                (ngSubmit)="onLoginSubmit(signInForm.value.email, signInForm.value.password)"
             >
                 <h2>
                     Welcome to Expense Tracker!
@@ -73,20 +74,23 @@
 
                 <button 
                     mat-flat-button 
+                    type="submit"
                     color="primary" 
                     [disabled]="!signInForm.valid"
+                    test-id="login-button"
                 >
                     LOGIN
                 </button>
 
                 <button 
                     mat-stroked-button 
+                    type="button"  
                     color="primary" 
-                    (click)="onToRegister()"
+                    (click)="onDontHaveAccount()"
+                    test-id="register-button"
                 >
                     Don't have an account? REGISTER
-                </button>
-                
+                </button>    
             </form>
         </div>
 
@@ -96,6 +100,7 @@
             <form 
                 [formGroup]="signUpForm" 
                 *ngIf="isSignUpClicked"
+                (ngSubmit)="onRegisterSubmit(signUpForm.value.email, signUpForm.value.password, signUpForm.value.repeatPassword)"
             >
                 <h2>
                     Create your new account
@@ -188,7 +193,8 @@
                         Repeat password is required
                     </mat-error>
 
-                    <mat-error *ngIf="signUpForm.get('repeatPassword')?.hasError('passwordMismatch')">
+                    <mat-error *ngIf="signUpForm.get('repeatPassword')?.hasError('passwordMismatch')" 
+                    >
                         Password do not match
                     </mat-error>
 
@@ -196,9 +202,10 @@
                 
                 <button 
                     mat-flat-button 
+                    type="submit"
                     color="primary" 
-                    (click)="onRegisterConfirm(password.value, repeatPassword.value)"
                     [disabled]="!signUpForm.valid"
+                    test-id="register-button"
                 >
                     REGISTER
                 </button>
@@ -206,7 +213,9 @@
                 <button 
                     mat-stroked-button 
                     color="primary" 
-                    (click)="onToLogin()"
+                    type="button"
+                    (click)="onAlreadyHaveAccount()"
+                    test-id="login-button"
                 >
                     Already have an account? LOGIN
                 </button>
